@@ -233,6 +233,53 @@ function initCards() {
     })
 }
 
+/**
+ * The teal accents lean toward the cursor. Each section tracks the pointer
+ * only while it is actually over that section, and writes the offset to two
+ * custom properties - the CSS transition does the easing, so nothing runs a
+ * per-frame loop.
+ */
+function initAccents() {
+    if (reducedMotion.matches) return
+
+    document.querySelectorAll('[data-accent]').forEach((accent) => {
+        const host = accent.closest('section')
+        if (!host) return
+
+        const REACH = 520   // px within which the accent responds
+        const PULL = 0.16   // how far it leans; a whole-number multiplier looks robotic
+
+        const onMove = (event) => {
+            const box = accent.getBoundingClientRect()
+            const dx = event.clientX - (box.left + box.width / 2)
+            const dy = event.clientY - (box.top + box.height / 2)
+            const distance = Math.hypot(dx, dy)
+
+            if (distance > REACH) {
+                accent.classList.remove('is-near')
+                accent.style.setProperty('--ax', '0px')
+                accent.style.setProperty('--ay', '0px')
+                return
+            }
+
+            // Falls off with distance, so the lean is strongest up close.
+            const strength = (1 - distance / REACH) * PULL
+            accent.classList.add('is-near')
+            accent.style.setProperty('--ax', `${dx * strength}px`)
+            accent.style.setProperty('--ay', `${dy * strength}px`)
+        }
+
+        const reset = () => {
+            accent.classList.remove('is-near')
+            accent.style.setProperty('--ax', '0px')
+            accent.style.setProperty('--ay', '0px')
+        }
+
+        host.addEventListener('pointermove', onMove)
+        host.addEventListener('pointerleave', reset)
+    })
+}
+
 /** Click a card, and its film opens in the player with sound and controls. */
 function initPlayer() {
     const dialog = document.getElementById('player')
@@ -350,4 +397,5 @@ document.getElementById('site-footer').innerHTML = footer()
 initReveal()
 initCountUp()
 initCards()
+initAccents()
 initPlayer()

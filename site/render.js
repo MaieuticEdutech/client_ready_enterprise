@@ -293,6 +293,35 @@ export function card(video, service, index) {
    Sections
    ------------------------------------------------------------------ */
 
+/**
+ * A teal accent for a section: a thin ring over a soft glow, drifting slowly
+ * and leaning toward the cursor. Purely decorative, so it never takes pointer
+ * events or a place in the accessibility tree.
+ */
+const ACCENT_SPOTS = [
+    { size: 15, top: '14%',  left: '78%',  delay: '0s'  },
+    { size: 11, top: '62%',  left: '8%',   delay: '-3s' },
+    { size: 18, top: '20%',  left: '86%',  delay: '-6s' },
+    { size: 12, top: '68%',  left: '12%',  delay: '-9s' },
+    { size: 14, top: '26%',  left: '82%',  delay: '-4s' },
+    { size: 16, top: '58%',  left: '6%',   delay: '-7s' },
+]
+
+export function accent(position) {
+    const spot = ACCENT_SPOTS[position % ACCENT_SPOTS.length]
+
+    return `
+        <div class="accent hidden lg:grid" data-accent aria-hidden="true"
+             style="width: ${spot.size}rem; height: ${spot.size}rem; top: ${spot.top}; left: ${spot.left}; --accent-delay: ${spot.delay}">
+            <span class="accent-body">
+                <span class="accent-glow"></span>
+                <span class="accent-ring"></span>
+                <span class="accent-ring-inner"></span>
+                <span class="accent-dot"></span>
+            </span>
+        </div>`
+}
+
 export function section(service, position, videos) {
     const own = videos
         .map((video, index) => ({ video, index }))
@@ -325,6 +354,7 @@ export function section(service, position, videos) {
             aria-labelledby="${service.slug}-title"
         >
             ${motif(service)}
+            ${accent(position)}
 
             <div class="relative mx-auto max-w-7xl px-5 sm:px-8">
                 <div class="reveal grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:items-end lg:gap-16">
