@@ -115,14 +115,14 @@ export const services = [
         name: 'AI Videos',
         tagline: 'Synthetic presenters, produced properly',
         description: 'AI-assisted presenters and voice for content that needs to ship at volume, scripted and directed with the same care as a live shoot.',
-        accent: ['#F2AA84', '#A31009'],
+        accent: ['#69FFF7', '#008680'],
     },
     {
         slug: 'smart-board',
         name: 'Smart Board',
         tagline: 'The film, before the film',
         description: 'Boards and animatics that settle pacing, framing and intent before a single frame is produced, so production time is spent building rather than deciding.',
-        accent: ['#F8847E', '#800D07'],
+        accent: ['#15D9A1', '#003D3A'],
     },
     {
         slug: 'swayam',

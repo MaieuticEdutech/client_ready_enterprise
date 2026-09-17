@@ -299,20 +299,45 @@ export function card(video, service, index) {
  * events or a place in the accessibility tree.
  */
 const ACCENT_SPOTS = [
-    { size: 15, top: '14%',  left: '78%',  delay: '0s'  },
-    { size: 11, top: '62%',  left: '8%',   delay: '-3s' },
-    { size: 18, top: '20%',  left: '86%',  delay: '-6s' },
-    { size: 12, top: '68%',  left: '12%',  delay: '-9s' },
-    { size: 14, top: '26%',  left: '82%',  delay: '-4s' },
-    { size: 16, top: '58%',  left: '6%',   delay: '-7s' },
+    { size: 15, top: '14%', left: '78%', delay: '0s'  },
+    { size: 11, top: '62%', left: '8%',  delay: '-4s' },
+    { size: 18, top: '20%', left: '86%', delay: '-8s' },
+    { size: 12, top: '68%', left: '12%', delay: '-12s' },
+    { size: 14, top: '26%', left: '82%', delay: '-16s' },
+    { size: 16, top: '58%', left: '6%',  delay: '-20s' },
 ]
 
-export function accent(position) {
+/* The field hands over from red to teal around the middle of the page, so the
+   accents hand over the other way: teal rings over the red half, coral over
+   the teal half. Either way the accent carries the family the field is not,
+   and stays visible instead of dissolving into its own background. */
+const ACCENT_TONES = {
+    teal: {
+        ring: 'rgba(105, 255, 247, 0.45)',
+        ringNear: 'rgba(105, 255, 247, 0.8)',
+        ringInner: 'rgba(21, 217, 161, 0.3)',
+        glow: 'rgba(21, 217, 161, 0.3)',
+        dot: 'rgb(105, 255, 247)',
+    },
+    coral: {
+        ring: 'rgba(255, 150, 132, 0.45)',
+        ringNear: 'rgba(255, 170, 152, 0.85)',
+        ringInner: 'rgba(242, 170, 132, 0.3)',
+        glow: 'rgba(214, 60, 44, 0.32)',
+        dot: 'rgb(255, 168, 146)',
+    },
+}
+
+export function accent(position, total = 6) {
     const spot = ACCENT_SPOTS[position % ACCENT_SPOTS.length]
+    // Upper half sits on red, lower half on teal.
+    const tone = position < total / 2 ? ACCENT_TONES.teal : ACCENT_TONES.coral
 
     return `
         <div class="accent hidden lg:grid" data-accent aria-hidden="true"
-             style="width: ${spot.size}rem; height: ${spot.size}rem; top: ${spot.top}; left: ${spot.left}; --accent-delay: ${spot.delay}">
+             style="width: ${spot.size}rem; height: ${spot.size}rem; top: ${spot.top}; left: ${spot.left}; --accent-delay: ${spot.delay};
+                    --accent-ring: ${tone.ring}; --accent-ring-near: ${tone.ringNear}; --accent-ring-inner: ${tone.ringInner};
+                    --accent-glow: ${tone.glow}; --accent-dot: ${tone.dot}">
             <span class="accent-body">
                 <span class="accent-glow"></span>
                 <span class="accent-ring"></span>
@@ -354,7 +379,7 @@ export function section(service, position, videos) {
             aria-labelledby="${service.slug}-title"
         >
             ${motif(service)}
-            ${accent(position)}
+            ${accent(position, 6)}
 
             <div class="relative mx-auto max-w-7xl px-5 sm:px-8">
                 <div class="reveal grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:items-end lg:gap-16">
