@@ -64,11 +64,6 @@ export const videos = [
 
     // Smart Board
     { service: 'smart-board', title: 'Pricing Fundamentals, Methods & Strategies', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/smart-board-pricing-fundamentals-methods-strategies.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/smart-board-pricing-fundamentals-methods-strategies.jpg' },
-
-
-
-    // Swayam
-    { service: 'swayam', title: 'Cyber Security Course Intro', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/swayam-cyber-security-course-intro.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/swayam-cyber-security-course-intro.jpg' },
 ]
 
 /**
@@ -113,8 +108,8 @@ export const panels = [
         number: '03',
         title: 'Production',
         description: 'Studio and screen capture, edited, graded and captioned to platform specification.',
-        image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/swayam-cyber-security-course-intro.jpg',
-        href: '#swayam',
+        image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/smart-board-pricing-fundamentals-methods-strategies.jpg',
+        href: '#smart-board',
     },
     {
         id: 'animation',
@@ -175,13 +170,6 @@ export const services = [
         tagline: 'The film, before the film',
         description: 'Boards and animatics that settle pacing, framing and intent before a single frame is produced, so production time is spent building rather than deciding.',
         accent: ['#15D9A1', '#003D3A'],
-    },
-    {
-        slug: 'swayam',
-        name: 'Swayam',
-        tagline: 'MOOC lectures, produced to broadcast standard',
-        description: 'End-to-end production for SWAYAM and MOOC courses: studio-recorded lectures, multi-camera sessions and screen capture, edited, captioned and packaged to platform specification.',
-        accent: ['#C1FAFB', '#00615C'],
     },
 ]
 
