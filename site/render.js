@@ -203,7 +203,7 @@ export function linkCard(video, service, index) {
 
     return `
         <${tag} data-card data-link-card ${attrs} ${cardShell(service, index, !pending)}>
-            <div class="relative aspect-video w-full overflow-hidden bg-ink-900">
+            <div class="relative aspect-[3/4] w-full overflow-hidden bg-ink-900">
                 ${cardWash(service)}
                 ${frame}
                 ${cardFinish}
@@ -263,7 +263,7 @@ export function card(video, service, index) {
 
     return `
         <figure data-card ${interactive} ${cardShell(service, index, !pending)}>
-            <div class="relative aspect-video w-full overflow-hidden bg-ink-900">
+            <div class="relative aspect-[3/4] w-full overflow-hidden bg-ink-900">
                 ${cardWash(service)}
                 ${posterImage}
                 ${preview}
@@ -290,21 +290,22 @@ export function card(video, service, index) {
    them can change without disturbing the others.
    ------------------------------------------------------------------ */
 
-/** The image behind a panel, cropped tight when narrow and opening as it widens. */
+/**
+ * The figure inside a panel. Not a photograph: the five discipline motifs are
+ * vector, so they stay crisp at any size, they carry no stray slide text, and
+ * they do not depend on how a particular film happened to be lit. Drawn in
+ * black on the red plate, which is the one pairing on this page that reads
+ * cleanly at any scale.
+ */
 function panelVisual(entry) {
-    if (!entry.image) {
-        return `<span class="panel-visual panel-visual-empty" aria-hidden="true"></span>`
-    }
+    const slug = String(entry.href || '').replace('#', '')
+    const art = motifs[slug] ?? motifs['motion-graphics']
 
     return `
-        <img
-            class="panel-visual"
-            src="${escapeHtml(resolveAsset(entry.image))}"
-            alt=""
-            loading="lazy"
-            decoding="async"
-            aria-hidden="true"
-        >`
+        <svg class="panel-motif" viewBox="0 0 200 200" fill="none" stroke="currentColor"
+             stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            ${art()}
+        </svg>`
 }
 
 /** Index and title always; the description and link only once there is room. */
@@ -330,6 +331,7 @@ function panel(entry, index) {
     // real when used. Focus activates it exactly as hover does.
     return `
         <a class="panel" href="${escapeHtml(entry.href || '#')}" data-panel="${index}"
+           style="--exposure: ${Number(entry.exposure) || 2}"
            aria-label="${escapeHtml(entry.title)} — ${escapeHtml(entry.description)}">
             ${panelVisual(entry)}
             <span class="panel-wash" aria-hidden="true"></span>
@@ -342,14 +344,17 @@ export function panelWall(entries) {
 
     return `
         <section class="panel-section" aria-labelledby="wall-title">
-            <div class="mx-auto max-w-7xl px-5 sm:px-8">
-                <p class="reveal text-xs font-semibold uppercase tracking-[0.3em] text-brand-aqua">What we do</p>
-                <h2 id="wall-title" class="reveal mt-4 max-w-3xl text-balance text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl" style="--reveal-delay: 80ms">
-                    Five disciplines, one production line.
-                </h2>
-            </div>
+            <!-- The heading and the wall share one black plate, so the whole
+                 thing reads as a single object standing in the room rather
+                 than a title with some panels underneath it. -->
+            <div class="plate reveal">
+                <div class="plate-head">
+                    <h2 id="wall-title" class="panel-heading">
+                        Five disciplines,<br>one production line.
+                    </h2>
+                    <p class="panel-tag">[ What we do ]</p>
+                </div>
 
-            <div class="reveal mx-auto mt-12 max-w-7xl px-5 sm:px-8" style="--reveal-delay: 160ms">
                 <div class="panel-frame" data-panel-wall>
                     ${entries.map(panel).join('')}
                 </div>
@@ -381,18 +386,18 @@ const ACCENT_SPOTS = [
    and stays visible instead of dissolving into its own background. */
 const ACCENT_TONES = {
     teal: {
-        ring: 'rgba(105, 255, 247, 0.45)',
-        ringNear: 'rgba(105, 255, 247, 0.8)',
-        ringInner: 'rgba(21, 217, 161, 0.3)',
-        glow: 'rgba(21, 217, 161, 0.3)',
-        dot: 'rgb(105, 255, 247)',
+        ring: 'rgba(245, 245, 242, 0.34)',
+        ringNear: 'rgba(245, 245, 242, 0.7)',
+        ringInner: 'rgba(199, 1, 2, 0.34)',
+        glow: 'rgba(199, 1, 2, 0.26)',
+        dot: 'rgb(245, 245, 242)',
     },
     coral: {
-        ring: 'rgba(255, 150, 132, 0.45)',
-        ringNear: 'rgba(255, 170, 152, 0.85)',
-        ringInner: 'rgba(242, 170, 132, 0.3)',
-        glow: 'rgba(214, 60, 44, 0.32)',
-        dot: 'rgb(255, 168, 146)',
+        ring: 'rgba(199, 1, 2, 0.5)',
+        ringNear: 'rgba(230, 40, 40, 0.85)',
+        ringInner: 'rgba(107, 0, 0, 0.4)',
+        glow: 'rgba(107, 0, 0, 0.38)',
+        dot: 'rgb(199, 1, 2)',
     },
 }
 
@@ -434,7 +439,7 @@ export function section(service, position, videos) {
 
     const grids = [...groups.entries()].map(([category, entries]) => `
         ${hasCategories ? `
-            <h3 class="reveal mt-14 flex items-center gap-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h3 class="reveal mt-14 flex items-center gap-4 text-2xl font-bold tracking-tight text-[#F5F5F2] sm:text-3xl">
                 <span class="h-px w-6 shrink-0" style="background: ${gradient(service)}"></span>
                 ${escapeHtml(category || 'More')}
             </h3>` : ''}
@@ -458,13 +463,15 @@ export function section(service, position, videos) {
     return `
         <section
             id="${service.slug}"
-            class="work-section relative isolate scroll-mt-8 overflow-hidden border-b border-white/8 py-20 sm:py-28 ${position % 2 ? 'bg-white/[0.02]' : ''}"
+            class="work-section relative scroll-mt-8 px-5 py-6 sm:px-8 sm:py-8"
             aria-labelledby="${service.slug}-title"
         >
-            ${motif(service)}
-            ${accent(position)}
+            <!-- Every section is a black plate standing in the red room, the
+                 same object the wall above it stands on. -->
+            <div class="plate reveal relative isolate overflow-hidden">
+                ${motif(service)}
 
-            <div class="relative mx-auto max-w-7xl px-5 sm:px-8">
+                <div class="relative">
                 <div class="reveal grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:items-end lg:gap-16">
                     <div>
                         <span class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
@@ -472,23 +479,24 @@ export function section(service, position, videos) {
                             <span class="h-px w-8" style="background: ${gradient(service)}"></span>
                         </span>
 
-                        <h2 id="${service.slug}-title" class="mt-4 text-balance text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl">
+                        <h2 id="${service.slug}-title" class="mt-4 text-balance text-4xl font-bold leading-[1.05] tracking-tight text-[#F5F5F2] sm:text-5xl">
                             ${escapeHtml(service.name)}
                         </h2>
 
                         ${service.tagline ? `
-                            <p class="mt-3 bg-clip-text text-lg font-semibold text-transparent" style="background-image: ${gradient(service)}">
+                            <p class="mt-3 text-lg font-semibold text-[#F5F5F2]/85">
                                 ${escapeHtml(service.tagline)}
                             </p>` : ''}
                     </div>
 
                     ${service.description ? `
-                        <p class="max-w-xl text-base leading-relaxed text-white/65 sm:text-lg">
+                        <p class="max-w-xl text-base leading-relaxed text-[#F5F5F2]/65 sm:text-lg">
                             ${escapeHtml(service.description)}
                         </p>` : ''}
                 </div>
 
-                ${grids}
+                    ${grids}
+                </div>
             </div>
         </section>`
 }

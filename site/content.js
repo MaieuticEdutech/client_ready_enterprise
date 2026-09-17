@@ -72,9 +72,9 @@ export const videos = [
  * `value` is what counts up; `suffix` is printed after it (e.g. '+', '%').
  */
 export const stats = [
-    { value: '2018', suffix: '', label: 'Founded in Bengaluru', accent: ['#FFB4A2', '#A31009'] },
-    { value: '50', suffix: '+', label: 'Clients', accent: ['#F8847E', '#800D07'] },
-    { value: '100', suffix: '%', label: 'In-House Multidisciplinary Team', accent: ['#FEF1DE', '#4F0703'] },
+    { value: '2018', suffix: '', label: 'Founded in Bengaluru', accent: ['#242424', '#050505'] },
+    { value: '50', suffix: '+', label: 'Clients', accent: ['#1C1C1C', '#050505'] },
+    { value: '100', suffix: '%', label: 'In-House Multidisciplinary Team', accent: ['#242424', '#050505'] },
 ]
 
 /**
@@ -89,6 +89,8 @@ export const stats = [
 export const panels = [
     {
         id: 'content',
+        // Exposure for the red duotone, measured from this image.
+        exposure: 2.18,
         number: '01',
         title: 'Content',
         description: 'Complex source material read, structured and rewritten into something a learner can actually follow.',
@@ -97,6 +99,8 @@ export const panels = [
     },
     {
         id: 'learning-design',
+        // Exposure for the red duotone, measured from this image.
+        exposure: 3.27,
         number: '02',
         title: 'Learning Design',
         description: 'Interactions, assessment and pacing designed so the course holds attention to the end.',
@@ -105,6 +109,8 @@ export const panels = [
     },
     {
         id: 'production',
+        // Exposure for the red duotone, measured from this image.
+        exposure: 1.51,
         number: '03',
         title: 'Production',
         description: 'Studio and screen capture, edited, graded and captioned to platform specification.',
@@ -113,6 +119,8 @@ export const panels = [
     },
     {
         id: 'animation',
+        // Exposure for the red duotone, measured from this image.
+        exposure: 2.3,
         number: '04',
         title: 'Animation',
         description: 'Drawn by hand and modelled in depth, for the ideas that only land once you can see them move.',
@@ -121,10 +129,12 @@ export const panels = [
     },
     {
         id: 'technology',
+        // Exposure for the red duotone, measured from this image.
+        exposure: 2.0,
         number: '05',
         title: 'Technology',
         description: 'SCORM packaging, LMS deployment and the plumbing that gets the work in front of learners.',
-        image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/ai-videos-ai-based-learning-sample.jpg',
+        image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/ai-videos-emversity-ews.jpg',
         href: '#ai-videos',
     },
 ]
@@ -141,35 +151,35 @@ export const services = [
         name: 'Articulate',
         tagline: 'Storyline and Rise builds that people finish',
         description: 'Interactive courses authored in Articulate Storyline and Rise, from scripting and screen design through to SCORM packaging and LMS handover.',
-        accent: ['#FEF1DE', '#800D07'],
+        accent: ['#1C1C1C', '#050505'],
     },
     {
         slug: 'infographics',
         name: 'Infographics',
         tagline: 'Complex ideas, made legible at a glance',
         description: 'Static and animated infographics that turn data, processes and policy into visuals people actually read, designed for slides, print, social and course pages alike.',
-        accent: ['#FFD166', '#B4530A'],
+        accent: ['#242424', '#050505'],
     },
     {
         slug: 'animation',
         name: 'Animation',
         tagline: 'Drawn by hand, modelled in depth',
         description: 'Character and vector animation for explainers, campaign films and course openers, alongside product and process animation in three dimensions for the ideas that only make sense when you can turn them around and look inside.',
-        accent: ['#F8847E', '#4F0703'],
+        accent: ['#C70102', '#050505'],
     },
     {
         slug: 'ai-videos',
         name: 'AI Videos',
         tagline: 'Synthetic presenters, produced properly',
         description: 'AI-assisted presenters and voice for content that needs to ship at volume, scripted and directed with the same care as a live shoot.',
-        accent: ['#69FFF7', '#008680'],
+        accent: ['#242424', '#050505'],
     },
     {
         slug: 'smart-board',
         name: 'Smart Board',
         tagline: 'The film, before the film',
         description: 'Boards and animatics that settle pacing, framing and intent before a single frame is produced, so production time is spent building rather than deciding.',
-        accent: ['#15D9A1', '#003D3A'],
+        accent: ['#1C1C1C', '#050505'],
     },
 ]
 

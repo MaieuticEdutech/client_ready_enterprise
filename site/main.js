@@ -26,7 +26,7 @@ function statCard(stat, index) {
             <span aria-hidden="true" class="sample-shine pointer-events-none absolute inset-0 -z-10"></span>
 
             <dt class="order-2 mt-2 text-[10px] font-medium uppercase leading-snug tracking-[0.14em] text-white/60">${escapeHtml(stat.label)}</dt>
-            <dd class="order-1 bg-gradient-to-r from-brand-sand to-brand-peach bg-clip-text font-serif text-4xl font-semibold tabular-nums leading-none text-transparent">
+            <dd class="order-1 font-serif text-4xl font-semibold tabular-nums leading-none text-[#F5F5F2]">
                 <span data-count="${escapeHtml(stat.value)}">${escapeHtml(stat.value)}</span>${escapeHtml(stat.suffix)}
             </dd>
         </div>`
