@@ -328,10 +328,12 @@ const ACCENT_TONES = {
     },
 }
 
-export function accent(position, total = 6) {
+export function accent(position) {
     const spot = ACCENT_SPOTS[position % ACCENT_SPOTS.length]
-    // Upper half sits on red, lower half on teal.
-    const tone = position < total / 2 ? ACCENT_TONES.teal : ACCENT_TONES.coral
+    // The field splits left-to-right, so an accent carries whichever family
+    // its own side does not: teal rings over the red left, coral over the
+    // teal right.
+    const tone = parseFloat(spot.left) < 50 ? ACCENT_TONES.teal : ACCENT_TONES.coral
 
     return `
         <div class="accent hidden lg:grid" data-accent aria-hidden="true"
@@ -379,7 +381,7 @@ export function section(service, position, videos) {
             aria-labelledby="${service.slug}-title"
         >
             ${motif(service)}
-            ${accent(position, 6)}
+            ${accent(position)}
 
             <div class="relative mx-auto max-w-7xl px-5 sm:px-8">
                 <div class="reveal grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:items-end lg:gap-16">

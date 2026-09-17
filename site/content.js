@@ -77,9 +77,9 @@ export const videos = [
  * `value` is what counts up; `suffix` is printed after it (e.g. '+', '%').
  */
 export const stats = [
-    { value: '2018', suffix: '', label: 'Founded in Bengaluru', accent: ['#69FFF7', '#00615C'] },
-    { value: '50', suffix: '+', label: 'Clients', accent: ['#15D9A1', '#008680'] },
-    { value: '100', suffix: '%', label: 'In-House Multidisciplinary Team', accent: ['#C1FAFB', '#003D3A'] },
+    { value: '2018', suffix: '', label: 'Founded in Bengaluru', accent: ['#FFB4A2', '#A31009'] },
+    { value: '50', suffix: '+', label: 'Clients', accent: ['#F8847E', '#800D07'] },
+    { value: '100', suffix: '%', label: 'In-House Multidisciplinary Team', accent: ['#FEF1DE', '#4F0703'] },
 ]
 
 /**
