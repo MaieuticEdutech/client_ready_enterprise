@@ -140,7 +140,7 @@ const playIcon = `<svg viewBox="0 0 24 24" class="size-6 translate-x-0.5" fill="
 const openIcon = `<svg viewBox="0 0 24 24" class="size-6 transition-transform duration-500 ease-out" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>`
 
 const cardShell = (service, index, interactive) => `
-    class="sample-card card-glass reveal group relative flex flex-col overflow-hidden rounded-2xl ring-1 ring-white/12 transition duration-500 ease-out hover:-translate-y-1.5 hover:ring-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-mint ${interactive ? 'cursor-pointer' : ''}"
+    class="sample-card card-glass reveal group relative flex flex-col overflow-hidden rounded-2xl ring-1 ring-white/12 transition duration-500 ease-out hover:-translate-y-1.5 hover:ring-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-peach ${interactive ? 'cursor-pointer' : ''}"
     style="--from: ${service.accent[0]}; --to: ${service.accent[1]}; --reveal-delay: ${(index % 3) * 90}ms"`
 
 const cardWash = (service) => `
@@ -220,10 +220,10 @@ export function linkCard(video, service, index) {
 
             <div class="card-glass flex flex-1 items-start justify-between gap-4 p-5">
                 <div class="min-w-0">
-                    <p class="truncate font-semibold text-white transition-colors duration-300 group-hover:text-brand-mint">${title}</p>
+                    <p class="truncate font-semibold text-white transition-colors duration-300 group-hover:text-brand-peach">${title}</p>
                     ${host ? `<p class="mt-0.5 truncate text-sm text-white/55">${escapeHtml(host)}</p>` : client ? `<p class="mt-0.5 truncate text-sm text-white/55">${client}</p>` : ''}
                 </div>
-                ${pending ? '' : `<span aria-hidden="true" class="shrink-0 text-white/40 transition duration-300 group-hover:text-brand-mint">${openIcon.replace('size-6', 'size-4')}</span>`}
+                ${pending ? '' : `<span aria-hidden="true" class="shrink-0 text-white/40 transition duration-300 group-hover:text-brand-peach">${openIcon.replace('size-6', 'size-4')}</span>`}
             </div>
         </${tag}>`
 }
@@ -281,7 +281,7 @@ export function card(video, service, index) {
 
             <figcaption class="card-glass flex flex-1 items-start justify-between gap-4 p-5">
                 <div class="min-w-0">
-                    <p class="truncate font-semibold text-white transition-colors duration-300 group-hover:text-brand-mint">${title}</p>
+                    <p class="truncate font-semibold text-white transition-colors duration-300 group-hover:text-brand-peach">${title}</p>
                     ${client ? `<p class="mt-0.5 truncate text-sm text-white/55">${client}</p>` : ''}
                 </div>
                 ${duration ? `<span class="shrink-0 text-xs tabular-nums text-white/45">${duration}</span>` : ''}

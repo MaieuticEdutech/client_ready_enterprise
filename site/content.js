@@ -77,9 +77,9 @@ export const videos = [
  * `value` is what counts up; `suffix` is printed after it (e.g. '+', '%').
  */
 export const stats = [
-    { value: '2018', suffix: '', label: 'Founded in Bengaluru', accent: ['#15D9A1', '#00615C'] },
-    { value: '50', suffix: '+', label: 'Clients', accent: ['#F2AA84', '#A31009'] },
-    { value: '100', suffix: '%', label: 'In-House Multidisciplinary Team', accent: ['#15D9A1', '#00615C'] },
+    { value: '2018', suffix: '', label: 'Founded in Bengaluru', accent: ['#F2AA84', '#A31009'] },
+    { value: '50', suffix: '+', label: 'Clients', accent: ['#F8847E', '#800D07'] },
+    { value: '100', suffix: '%', label: 'In-House Multidisciplinary Team', accent: ['#FEF1DE', '#4F0703'] },
 ]
 
 /**
@@ -94,7 +94,7 @@ export const services = [
         name: 'Articulate',
         tagline: 'Storyline and Rise builds that people finish',
         description: 'Interactive courses authored in Articulate Storyline and Rise, from scripting and screen design through to SCORM packaging and LMS handover.',
-        accent: ['#15D9A1', '#00615C'],
+        accent: ['#FEF1DE', '#800D07'],
     },
     {
         slug: 'infographics',
@@ -108,7 +108,7 @@ export const services = [
         name: 'Animation',
         tagline: 'Drawn by hand, modelled in depth',
         description: 'Character and vector animation for explainers, campaign films and course openers, alongside product and process animation in three dimensions for the ideas that only make sense when you can turn them around and look inside.',
-        accent: ['#69FFF7', '#008680'],
+        accent: ['#F8847E', '#4F0703'],
     },
     {
         slug: 'ai-videos',
@@ -129,7 +129,7 @@ export const services = [
         name: 'Swayam',
         tagline: 'MOOC lectures, produced to broadcast standard',
         description: 'End-to-end production for SWAYAM and MOOC courses: studio-recorded lectures, multi-camera sessions and screen capture, edited, captioned and packaged to platform specification.',
-        accent: ['#C1FAFB', '#00615C'],
+        accent: ['#F2AA84', '#6B0A05'],
     },
 ]
 

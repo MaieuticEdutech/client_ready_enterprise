@@ -26,7 +26,7 @@ function statCard(stat, index) {
             <span aria-hidden="true" class="sample-shine pointer-events-none absolute inset-0 -z-10"></span>
 
             <dt class="order-2 mt-2 text-[10px] font-medium uppercase leading-snug tracking-[0.14em] text-white/60">${escapeHtml(stat.label)}</dt>
-            <dd class="order-1 bg-gradient-to-r from-brand-mint to-brand-aqua bg-clip-text font-serif text-4xl font-semibold tabular-nums leading-none text-transparent">
+            <dd class="order-1 bg-gradient-to-r from-brand-sand to-brand-peach bg-clip-text font-serif text-4xl font-semibold tabular-nums leading-none text-transparent">
                 <span data-count="${escapeHtml(stat.value)}">${escapeHtml(stat.value)}</span>${escapeHtml(stat.suffix)}
             </dd>
         </div>`
@@ -67,7 +67,7 @@ function footer() {
                             ${company.socials.map(([label, href, path]) => `
                                 <li>
                                     <a href="${escapeHtml(href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(label)}"
-                                       class="flex size-10 items-center justify-center rounded-lg border border-white/15 text-white/70 transition hover:border-brand-mint/60 hover:text-brand-mint">
+                                       class="flex size-10 items-center justify-center rounded-lg border border-white/15 text-white/70 transition hover:border-brand-peach/60 hover:text-brand-peach">
                                         <svg viewBox="0 0 24 24" class="size-4" fill="currentColor" aria-hidden="true"><path d="${path}" /></svg>
                                     </a>
                                 </li>`).join('')}
@@ -82,14 +82,14 @@ function footer() {
 
                         <ul class="mt-6 space-y-3 text-sm">
                             <li>
-                                <a href="mailto:${escapeHtml(company.email)}" class="flex items-center gap-2.5 text-white/80 transition hover:text-brand-mint">
-                                    <svg viewBox="0 0 24 24" class="size-4 shrink-0 text-brand-mint" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+                                <a href="mailto:${escapeHtml(company.email)}" class="flex items-center gap-2.5 text-white/80 transition hover:text-brand-peach">
+                                    <svg viewBox="0 0 24 24" class="size-4 shrink-0 text-brand-peach" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
                                     ${escapeHtml(company.email)}
                                 </a>
                             </li>
                             <li>
-                                <a href="${escapeHtml(company.phoneHref)}" class="flex items-center gap-2.5 text-white/80 transition hover:text-brand-mint">
-                                    <svg viewBox="0 0 24 24" class="size-4 shrink-0 text-brand-mint" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg>
+                                <a href="${escapeHtml(company.phoneHref)}" class="flex items-center gap-2.5 text-white/80 transition hover:text-brand-peach">
+                                    <svg viewBox="0 0 24 24" class="size-4 shrink-0 text-brand-peach" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg>
                                     ${escapeHtml(company.phone)}
                                 </a>
                             </li>
