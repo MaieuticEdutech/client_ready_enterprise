@@ -40,15 +40,24 @@
        is fixed so the field stays put while the page scrolls over it - the
        whole site reads as one surface instead of a stack of bands. */
     body {
-        background-color: #0A0403;
+        background-color: #26090A;
+        /* Smaller, more numerous pools rather than a few enormous ones. Orbs
+           wider than the viewport only ever show one fragment of a colour
+           transition, which reads as a zoomed-in smear; at this scale the
+           field has a composition you can actually see. */
         background-image:
-            radial-gradient(60rem 44rem at 8% -12%, rgba(163, 16, 9, 0.34), transparent 62%),
-            radial-gradient(56rem 44rem at 96% 0%, rgba(128, 13, 7, 0.40), transparent 64%),
-            radial-gradient(44rem 38rem at 84% 46%, rgba(248, 132, 126, 0.13), transparent 60%),
-            radial-gradient(62rem 50rem at 0% 62%, rgba(163, 16, 9, 0.24), transparent 64%),
-            radial-gradient(46rem 40rem at 58% 104%, rgba(242, 170, 132, 0.11), transparent 62%),
-            radial-gradient(70rem 56rem at 50% 50%, rgba(79, 7, 3, 0.35), transparent 70%);
-        background-attachment: fixed;
+            radial-gradient(34rem 26rem at 14% 4%, rgba(196, 26, 18, 0.55), transparent 60%),
+            radial-gradient(30rem 24rem at 88% 2%, rgba(163, 16, 9, 0.52), transparent 60%),
+            radial-gradient(26rem 20rem at 62% 22%, rgba(248, 132, 126, 0.20), transparent 62%),
+            radial-gradient(32rem 26rem at 4% 38%, rgba(163, 16, 9, 0.40), transparent 60%),
+            radial-gradient(28rem 22rem at 96% 46%, rgba(196, 26, 18, 0.42), transparent 60%),
+            radial-gradient(26rem 20rem at 40% 58%, rgba(242, 170, 132, 0.16), transparent 62%),
+            radial-gradient(30rem 24rem at 16% 82%, rgba(196, 26, 18, 0.38), transparent 60%),
+            radial-gradient(28rem 22rem at 84% 90%, rgba(163, 16, 9, 0.42), transparent 60%);
+        /* Scrolls with the page: a fixed field of this scale would slide under
+           the content and read as the background sticking. */
+        background-attachment: scroll;
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         color: rgb(255 255 255 / 0.92);
         -webkit-font-smoothing: antialiased;
@@ -63,7 +72,7 @@
         inset: 0;
         z-index: 0;
         pointer-events: none;
-        opacity: 0.4;
+        opacity: 0.28;
         mix-blend-mode: overlay;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         background-size: 200px 200px;
@@ -76,7 +85,7 @@
         inset: 0;
         z-index: 0;
         pointer-events: none;
-        background: radial-gradient(120% 90% at 50% 40%, transparent 42%, rgba(6, 2, 1, 0.62) 100%);
+        background: radial-gradient(120% 90% at 50% 40%, transparent 42%, rgba(20, 5, 5, 0.45) 100%);
     }
 
     /* Everything real sits above the field and its two overlays. */
@@ -368,6 +377,54 @@
         animation: about-orbit-turn 60s linear infinite;
     }
 
+    /* ---------------------------------------------------------------
+       The curtain. Two halves close over the frame while the film loads
+       and draw back once it can play, so the wait reads as a house
+       light going down rather than a black rectangle. Each half carries
+       the service's own colour through --from.
+       --------------------------------------------------------------- */
+    .curtain {
+        z-index: 2;
+        opacity: 1;
+        transition: opacity 0.3s ease-out 0.75s;
+    }
+
+    .curtain-panel {
+        position: absolute;
+        top: -2%;
+        height: 104%;
+        width: 50.5%;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 22%),
+            linear-gradient(100deg, var(--from, #a31009), rgba(10, 4, 3, 0.96));
+        /* A soft fold down the leading edge, so the halves read as cloth. */
+        box-shadow: inset -18px 0 34px -18px rgba(0, 0, 0, 0.85);
+        transition: transform 0.85s cubic-bezier(0.65, 0, 0.2, 1);
+        will-change: transform;
+    }
+
+    .curtain-left  { left: 0; transform: translateX(0); }
+    .curtain-right { right: 0; transform: translateX(0); box-shadow: inset 18px 0 34px -18px rgba(0, 0, 0, 0.85); }
+
+    /* A hairline of light down the join, brightest before the parting. */
+    .curtain-seam {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 2px;
+        transform: translateX(-50%);
+        background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+        opacity: 0.8;
+        transition: opacity 0.4s ease-out;
+    }
+
+    /* Drawn back: the halves clear the frame and the layer stops catching clicks. */
+    .curtain.is-open { opacity: 0; }
+    .curtain.is-open .curtain-left  { transform: translateX(-101%); }
+    .curtain.is-open .curtain-right { transform: translateX(101%); }
+    .curtain.is-open .curtain-seam  { opacity: 0; }
+
     /* The play button breathes softly so a still poster still reads as a film. */
     @keyframes play-breathe {
         0%, 100% { box-shadow: 0 0 0 0 rgb(255 255 255 / 0.35); }
@@ -392,6 +449,8 @@
         .motif-ring, .motif-branch, .motif-node, .motif-arc, .motif-plot, .motif-dot,
         .motif-frame, .motif-stroke, .motif-cell, .motif-scan, .motif-panel, .motif-sketch,
         .motif-bar, .motif-orbit, .motif-wave, .motif-play-mark, .about-orbit, .sample-shine, .play-button, .link-button { animation: none; }
+
+        .curtain, .curtain-panel, .curtain-seam { transition: none; }
 
         .motif-splash, .motif-art, .sample-splash { transition: none; }
         .player[open] { animation: none; }

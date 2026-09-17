@@ -237,9 +237,30 @@ function initCards() {
 function initPlayer() {
     const dialog = document.getElementById('player')
     const frame = dialog.querySelector('[data-player-frame]')
+    const curtain = dialog.querySelector('[data-curtain]')
     const title = dialog.querySelector('[data-player-title]')
     const meta = dialog.querySelector('[data-player-meta]')
     let opener = null
+    let curtainTimer = null
+
+    /**
+     * Draw the curtain back. Called when the film is ready, and on a timer as
+     * a backstop - a slow network or a blocked embed must never leave the
+     * curtain shut over a film that is actually playing.
+     */
+    const openCurtain = () => {
+        clearTimeout(curtainTimer)
+        curtainTimer = null
+        curtain.classList.add('is-open')
+    }
+
+    const closeCurtain = () => {
+        clearTimeout(curtainTimer)
+        curtain.classList.remove('is-open')
+        // Force the browser to apply the closed state before the next paint,
+        // or a reopened dialog transitions from wherever it was left.
+        void curtain.offsetWidth
+    }
 
     const open = (index, from) => {
         const video = videos[index]
@@ -250,12 +271,25 @@ function initPlayer() {
 
         opener = from
 
+        closeCurtain()
+
         if (source.kind === 'file') {
             const poster = resolveAsset(video.poster)
             frame.innerHTML = `<video controls autoplay playsinline ${poster ? `poster="${escapeHtml(poster)}"` : ''} src="${escapeHtml(source.url)}"></video>`
+            // A file tells us when it can actually play; wait for that, so the
+            // curtain parts on the film rather than on a black frame.
+            const film = frame.querySelector('video')
+            film.addEventListener('playing', openCurtain, { once: true })
+            film.addEventListener('loadeddata', openCurtain, { once: true })
         } else {
             frame.innerHTML = `<iframe src="${escapeHtml(source.embed)}" title="${escapeHtml(video.title)}" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`
+            // A cross-origin embed will not tell us, so give it a beat to paint.
+            frame.querySelector('iframe').addEventListener('load', () => setTimeout(openCurtain, 350), { once: true })
         }
+
+        // Backstop: never hold the curtain shut longer than this, whatever
+        // the network is doing.
+        curtainTimer = setTimeout(openCurtain, 2600)
 
         title.textContent = video.title
         meta.textContent = [service?.name, video.client, video.duration].filter(Boolean).join('  ·  ')
@@ -269,6 +303,7 @@ function initPlayer() {
     }
 
     dialog.addEventListener('close', () => {
+        closeCurtain()
         frame.innerHTML = ''
         document.body.style.overflow = ''
         opener?.focus?.()

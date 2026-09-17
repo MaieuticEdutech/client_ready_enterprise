@@ -6,7 +6,7 @@
 
         <title>Maieutic — What we make</title>
         <meta name="description" content="Enterprise learning content from Maieutic: Articulate courses, infographics, 2D and 3D animation, AI presenters, smart boards and SWAYAM production.">
-        <meta name="theme-color" content="#0A0403">
+        <meta name="theme-color" content="#26090A">
 
         <meta property="og:title" content="Maieutic — What we make">
         <meta property="og:description" content="Six ways we make learning move. Interactive courses, animation, synthetic presenters and studio production, delivered end to end.">
@@ -103,7 +103,16 @@
 
         <!-- The player -->
         <dialog id="player" class="player" aria-labelledby="player-title">
-            <div class="player-frame relative aspect-video w-full overflow-hidden rounded-2xl bg-black" data-player-frame></div>
+            <div class="relative aspect-video w-full overflow-hidden rounded-2xl bg-black">
+                <div class="player-frame absolute inset-0" data-player-frame></div>
+
+                <!-- Curtain: two halves drawn over the film, parting once it is ready -->
+                <div class="curtain pointer-events-none absolute inset-0 overflow-hidden" data-curtain aria-hidden="true">
+                    <span class="curtain-panel curtain-left"></span>
+                    <span class="curtain-panel curtain-right"></span>
+                    <span class="curtain-seam"></span>
+                </div>
+            </div>
 
             <div class="mt-4 flex items-start justify-between gap-6 px-1">
                 <div class="min-w-0">
