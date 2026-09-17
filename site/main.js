@@ -1,6 +1,6 @@
 import './style.css'
-import { videos, services, stats, company } from './content.js'
-import { escapeHtml, gradient, parseSource, resolveAsset, section } from './render.js'
+import { videos, services, stats, company, panels } from './content.js'
+import { escapeHtml, gradient, parseSource, resolveAsset, section, panelWall } from './render.js'
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
@@ -333,6 +333,53 @@ function initRails() {
     })
 }
 
+/**
+ * The wall. Hover drives it on a pointer device and CSS does that on its own;
+ * this adds what CSS cannot: a sticky active panel for touch and keyboard, and
+ * a hold on mouse-leave so the wall does not snap shut the instant the cursor
+ * clips an edge.
+ */
+function initPanelWall() {
+    const wall = document.querySelector('[data-panel-wall]')
+    if (!wall) return
+
+    const items = [...wall.querySelectorAll('[data-panel]')]
+    if (!items.length) return
+
+    const coarse = window.matchMedia('(hover: none)')
+    let releaseTimer = null
+
+    const setActive = (target) => {
+        clearTimeout(releaseTimer)
+        items.forEach((item) => item.classList.toggle('is-active', item === target))
+    }
+
+    const clearActive = () => items.forEach((item) => item.classList.remove('is-active'))
+
+    items.forEach((item) => {
+        // Focus activates exactly as hover does, so a keyboard walks the wall.
+        item.addEventListener('focus', () => setActive(item))
+
+        item.addEventListener('click', (event) => {
+            // On touch the first tap opens the panel; a second follows the link.
+            if (coarse.matches && !item.classList.contains('is-active')) {
+                event.preventDefault()
+                setActive(item)
+            }
+        })
+    })
+
+    // Leaving the wall holds the last panel briefly rather than snapping back,
+    // so crossing a divider or clipping an edge never reads as a flicker.
+    wall.addEventListener('pointerleave', () => {
+        if (coarse.matches) return
+        clearTimeout(releaseTimer)
+        releaseTimer = setTimeout(clearActive, 420)
+    })
+
+    wall.addEventListener('pointerenter', () => clearTimeout(releaseTimer))
+}
+
 /** Click a card, and its film opens in the player with sound and controls. */
 function initPlayer() {
     const dialog = document.getElementById('player')
@@ -444,6 +491,7 @@ document.getElementById('jump-list').innerHTML = services
     .join('')
 
 document.getElementById('stats').innerHTML = stats.map(statCard).join('')
+document.getElementById('panel-wall').innerHTML = panelWall(panels)
 document.getElementById('work').innerHTML = services.map((service, position) => section(service, position, videos)).join('')
 document.getElementById('site-footer').innerHTML = footer()
 
@@ -452,4 +500,5 @@ initCountUp()
 initCards()
 initAccents()
 initRails()
+initPanelWall()
 initPlayer()

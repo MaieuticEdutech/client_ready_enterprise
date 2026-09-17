@@ -83,6 +83,58 @@ export const stats = [
 ]
 
 /**
+ * The exhibition wall beside the hero: five vertical panels, one per area of
+ * the work. Edit freely - the interaction reads whatever is in this array, so
+ * labels, copy and imagery can all change without touching the component.
+ *
+ * `image` takes the same values as a sample's `poster`: a file under
+ * site/public/, or any direct URL. Leave it '' and the panel falls back to its
+ * own colour treatment rather than a broken image.
+ */
+export const panels = [
+    {
+        id: 'content',
+        number: '01',
+        title: 'Content',
+        description: 'Complex source material read, structured and rewritten into something a learner can actually follow.',
+        image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/infographics-creating-an-effective-imc-plan.jpg',
+        href: '#infographics',
+    },
+    {
+        id: 'learning-design',
+        number: '02',
+        title: 'Learning Design',
+        description: 'Interactions, assessment and pacing designed so the course holds attention to the end.',
+        image: 'posters/articulate-creating-dynamic-dashboards.jpg',
+        href: '#articulate',
+    },
+    {
+        id: 'production',
+        number: '03',
+        title: 'Production',
+        description: 'Studio and screen capture, edited, graded and captioned to platform specification.',
+        image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/swayam-cyber-security-course-intro.jpg',
+        href: '#swayam',
+    },
+    {
+        id: 'animation',
+        number: '04',
+        title: 'Animation',
+        description: 'Drawn by hand and modelled in depth, for the ideas that only land once you can see them move.',
+        image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-blood-vessel.jpg',
+        href: '#animation',
+    },
+    {
+        id: 'technology',
+        number: '05',
+        title: 'Technology',
+        description: 'SCORM packaging, LMS deployment and the plumbing that gets the work in front of learners.',
+        image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/ai-videos-ai-based-learning-sample.jpg',
+        href: '#ai-videos',
+    },
+]
+
+/**
  * The six lines of work. Order here is the order on the page. A service with
  * `kind: 'links'` shows courses opened by link rather than films. Each carries
  * its own two colour stops, used for the section accent and the card washes.

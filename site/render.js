@@ -290,6 +290,82 @@ export function card(video, service, index) {
 }
 
 /* ------------------------------------------------------------------
+   The exhibition wall: five vertical panels inside one frame. Hovering
+   a panel widens it and compresses the rest; none of them ever leave,
+   so the narrow ones keep working as navigation.
+
+   Split into three builders - visual, content, panel - so any one of
+   them can change without disturbing the others.
+   ------------------------------------------------------------------ */
+
+/** The image behind a panel, cropped tight when narrow and opening as it widens. */
+function panelVisual(entry) {
+    if (!entry.image) {
+        return `<span class="panel-visual panel-visual-empty" aria-hidden="true"></span>`
+    }
+
+    return `
+        <img
+            class="panel-visual"
+            src="${escapeHtml(resolveAsset(entry.image))}"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            aria-hidden="true"
+        >`
+}
+
+/** Index and title always; the description and link only once there is room. */
+function panelContent(entry) {
+    return `
+        <span class="panel-content">
+            <span class="panel-index">${escapeHtml(entry.number)}</span>
+
+            <span class="panel-title">${escapeHtml(entry.title)}</span>
+
+            <span class="panel-reveal">
+                <span class="panel-description">${escapeHtml(entry.description)}</span>
+                <span class="panel-cta">
+                    Explore
+                    <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </span>
+            </span>
+        </span>`
+}
+
+function panel(entry, index) {
+    // An anchor, so the panel is reachable by keyboard and lands somewhere
+    // real when used. Focus activates it exactly as hover does.
+    return `
+        <a class="panel" href="${escapeHtml(entry.href || '#')}" data-panel="${index}"
+           aria-label="${escapeHtml(entry.title)} — ${escapeHtml(entry.description)}">
+            ${panelVisual(entry)}
+            <span class="panel-wash" aria-hidden="true"></span>
+            ${panelContent(entry)}
+        </a>`
+}
+
+export function panelWall(entries) {
+    if (!entries.length) return ''
+
+    return `
+        <section class="panel-section" aria-labelledby="wall-title">
+            <div class="mx-auto max-w-7xl px-5 sm:px-8">
+                <p class="reveal text-xs font-semibold uppercase tracking-[0.3em] text-brand-aqua">What we do</p>
+                <h2 id="wall-title" class="reveal mt-4 max-w-3xl text-balance text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl" style="--reveal-delay: 80ms">
+                    Five disciplines, one production line.
+                </h2>
+            </div>
+
+            <div class="reveal mx-auto mt-12 max-w-7xl px-5 sm:px-8" style="--reveal-delay: 160ms">
+                <div class="panel-frame" data-panel-wall>
+                    ${entries.map(panel).join('')}
+                </div>
+            </div>
+        </section>`
+}
+
+/* ------------------------------------------------------------------
    Sections
    ------------------------------------------------------------------ */
 

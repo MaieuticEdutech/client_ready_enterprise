@@ -383,6 +383,214 @@
     }
 
     /* ---------------------------------------------------------------
+       The exhibition wall. Five panels inside one frame, sized by flex
+       so widening one compresses the others in the same transition -
+       the focus transfers continuously rather than closing then opening.
+       --------------------------------------------------------------- */
+    .panel-section { padding-block: 6rem; }
+
+    .panel-frame {
+        display: flex;
+        overflow: hidden;
+        height: 74vh;
+        min-height: 30rem;
+        max-height: 46rem;
+        border-radius: 1.25rem;
+        /* The structural edge: one hairline around the whole installation,
+           and the panels divide themselves. No gaps - they are meant to read
+           as one object, not five cards. */
+        border: 1px solid rgb(255 255 255 / 0.14);
+        background: rgb(4 10 10 / 0.6);
+    }
+
+    .panel {
+        position: relative;
+        display: block;
+        flex: 1 1 0;
+        overflow: hidden;
+        text-decoration: none;
+        border-left: 1px solid rgb(255 255 255 / 0.12);
+        /* The single easing everything in the wall shares, so the width, the
+           image and the copy all arrive together. */
+        transition: flex-grow 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .panel:first-child { border-left: 0; }
+
+    /* Active: roughly 40% of the frame, the rest sharing what is left. */
+    .panel-frame:hover .panel:hover,
+    .panel.is-active { flex-grow: 3.4; }
+
+    .panel-visual {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Narrow, the crop sits off-centre and a little enlarged; widening
+           walks it back to centre and to its true size, so the composition
+           opens rather than the image simply zooming. */
+        object-position: 62% center;
+        transform: scale(1.18);
+        filter: saturate(0.55) brightness(0.62);
+        transition:
+            object-position 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+            filter 0.75s ease-out;
+    }
+
+    .panel-visual-empty {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(170deg, #005B5A, #04100F 70%);
+    }
+
+    .panel:hover .panel-visual,
+    .panel:focus-visible .panel-visual,
+    .panel.is-active .panel-visual {
+        object-position: 50% center;
+        transform: scale(1.02);
+        filter: saturate(1) brightness(0.9);
+    }
+
+    /* Teal over the resting panels, burgundy under the active one - the accent
+       is what marks the focus, rather than a glow or a border. */
+    .panel-wash {
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(180deg, rgb(4 16 15 / 0.2) 0%, rgb(4 16 15 / 0.82) 72%),
+            linear-gradient(180deg, rgb(0 91 90 / 0.55), rgb(0 65 62 / 0.75));
+        transition: opacity 0.75s ease-out;
+    }
+
+    .panel:hover .panel-wash,
+    .panel:focus-visible .panel-wash,
+    .panel.is-active .panel-wash {
+        background:
+            linear-gradient(180deg, rgb(8 4 4 / 0.15) 0%, rgb(10 4 3 / 0.86) 74%),
+            linear-gradient(180deg, rgb(128 13 7 / 0.32), rgb(60 6 3 / 0.5));
+    }
+
+    .panel-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%;
+        padding: 2rem 1.5rem;
+        color: #F7F3ED;
+    }
+
+    .panel-index {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        color: rgb(247 243 237 / 0.55);
+    }
+
+    .panel-title {
+        margin-top: 0.75rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        /* Held on one line while narrow, so a compressed panel never becomes a
+           column of single letters. */
+        white-space: nowrap;
+    }
+
+    /* The reveal: copy and link are laid out at full size the whole time and
+       clipped, so they wipe open with the panel instead of popping in. */
+    .panel-reveal {
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transform: translateY(10px);
+        transition:
+            grid-template-rows 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 0.5s ease-out,
+            transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .panel-reveal > * { overflow: hidden; min-height: 0; }
+
+    .panel:hover .panel-reveal,
+    .panel:focus-visible .panel-reveal,
+    .panel.is-active .panel-reveal {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        transform: translateY(0);
+        /* Copy waits for the panel to be most of the way open. */
+        transition-delay: 0.18s;
+    }
+
+    .panel-description {
+        display: block;
+        max-width: 22rem;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: rgb(247 243 237 / 0.78);
+    }
+
+    .panel-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-top: 1.25rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: #F7F3ED;
+    }
+
+    .panel:hover .panel-cta svg { transform: translateX(3px); }
+    .panel-cta svg { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+
+    .panel:focus-visible {
+        outline: 2px solid rgb(105 255 247 / 0.9);
+        outline-offset: -2px;
+    }
+
+    /* Tablet: the wall stays horizontal, but shorter and tighter. */
+    @media (max-width: 1023px) {
+        .panel-frame { height: 62vh; min-height: 26rem; }
+        .panel-content { padding: 1.5rem 1rem; }
+        .panel-title { font-size: 1.15rem; }
+        .panel-description { font-size: 0.875rem; }
+    }
+
+    /* Touch: the same interaction turned on its side. Panels stack and open
+       downward, because a hover-width wall has nothing to respond to. */
+    @media (max-width: 767px) {
+        .panel-section { padding-block: 4rem; }
+
+        .panel-frame {
+            flex-direction: column;
+            height: auto;
+            min-height: 0;
+            max-height: none;
+        }
+
+        .panel {
+            flex: 0 0 auto;
+            height: 6.5rem;
+            border-left: 0;
+            border-top: 1px solid rgb(255 255 255 / 0.12);
+            transition: height 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .panel:first-child { border-top: 0; }
+        .panel.is-active { height: 22rem; }
+
+        .panel-title { white-space: normal; }
+        .panel-visual { transform: scale(1.06); object-position: 50% 40%; }
+    }
+
+    /* ---------------------------------------------------------------
        Rails. Each service's samples run in one horizontal queue that
        snaps card to card, rather than wrapping into a grid.
        --------------------------------------------------------------- */
@@ -650,6 +858,15 @@
         .curtain, .curtain-panel, .curtain-seam { transition: none; }
 
         .accent-body { animation: none; }
+
+        .panel,
+        .panel-visual,
+        .panel-wash,
+        .panel-reveal,
+        .panel-cta svg { transition: none; }
+
+        /* With no expansion to reveal it, every panel simply shows its copy. */
+        .panel-reveal { grid-template-rows: 1fr; opacity: 1; transform: none; }
 
         .rail { scroll-behavior: auto; }
         .rail:hover .sample-card:not(:hover) { opacity: 1; filter: none; }
