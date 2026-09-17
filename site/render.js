@@ -140,7 +140,7 @@ const playIcon = `<svg viewBox="0 0 24 24" class="size-6 translate-x-0.5" fill="
 const openIcon = `<svg viewBox="0 0 24 24" class="size-6 transition-transform duration-500 ease-out" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>`
 
 const cardShell = (service, index, interactive) => `
-    class="sample-card card-glass reveal group relative flex flex-col overflow-hidden rounded-2xl ring-1 ring-white/12 transition duration-500 ease-out hover:-translate-y-1.5 hover:ring-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-peach ${interactive ? 'cursor-pointer' : ''}"
+    class="sample-card card-glass reveal group relative flex w-[78vw] shrink-0 snap-start flex-col overflow-hidden rounded-2xl ring-1 ring-white/12 transition duration-500 ease-out hover:-translate-y-1.5 hover:ring-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-peach sm:w-[20rem] lg:w-[23rem] ${interactive ? 'cursor-pointer' : ''}"
     style="--from: ${service.accent[0]}; --to: ${service.accent[1]}; --reveal-delay: ${(index % 3) * 90}ms"`
 
 const cardWash = (service) => `
@@ -370,8 +370,21 @@ export function section(service, position, videos) {
                 <span class="h-px w-6 shrink-0" style="background: ${gradient(service)}"></span>
                 ${escapeHtml(category || 'More')}
             </h3>` : ''}
-        <div class="${hasCategories ? 'mt-6' : 'mt-12'} grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            ${entries.map(({ video, index }) => card(video, service, index)).join('')}
+        <div class="rail-wrap relative ${hasCategories ? 'mt-6' : 'mt-12'}">
+            <div class="rail flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 lg:gap-8" data-rail>
+                ${entries.map(({ video, index }) => card(video, service, index)).join('')}
+            </div>
+
+            <!-- Edge fades, so the rail reads as continuing past the frame -->
+            <span class="rail-fade rail-fade-left" aria-hidden="true"></span>
+            <span class="rail-fade rail-fade-right" aria-hidden="true"></span>
+
+            <button type="button" class="rail-nav rail-nav-prev" data-rail-prev aria-label="Previous">
+                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button type="button" class="rail-nav rail-nav-next" data-rail-next aria-label="Next">
+                <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
         </div>`).join('')
 
     return `

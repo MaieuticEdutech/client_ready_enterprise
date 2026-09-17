@@ -280,6 +280,59 @@ function initAccents() {
     })
 }
 
+/**
+ * Each rail pages by whole cards, and reports where it is: the edge fades and
+ * the arrows only appear when there is actually more rail in that direction.
+ */
+function initRails() {
+    document.querySelectorAll('[data-rail]').forEach((rail) => {
+        const wrap = rail.closest('.rail-wrap')
+        const prev = wrap.querySelector('[data-rail-prev]')
+        const next = wrap.querySelector('[data-rail-next]')
+
+        // One card plus the gap, measured rather than assumed, so the step
+        // stays correct across breakpoints.
+        const step = () => {
+            const card = rail.querySelector('.sample-card')
+            if (!card) return rail.clientWidth
+            const gap = parseFloat(getComputedStyle(rail).columnGap) || 0
+            return card.getBoundingClientRect().width + gap
+        }
+
+        const sync = () => {
+            const max = rail.scrollWidth - rail.clientWidth
+            // A pixel of slack: sub-pixel layout means scrollLeft rarely lands
+            // exactly on 0 or max.
+            const atStart = rail.scrollLeft <= 1
+            const atEnd = rail.scrollLeft >= max - 1
+            const scrollable = max > 1
+
+            wrap.classList.toggle('can-prev', scrollable && !atStart)
+            wrap.classList.toggle('can-next', scrollable && !atEnd)
+            prev.classList.toggle('is-usable', scrollable && !atStart)
+            next.classList.toggle('is-usable', scrollable && !atEnd)
+        }
+
+        prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }))
+        next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }))
+
+        rail.addEventListener('scroll', () => {
+            // Coalesce to one update per frame; scroll fires far more often.
+            if (rail.dataset.ticking) return
+            rail.dataset.ticking = '1'
+            requestAnimationFrame(() => {
+                sync()
+                delete rail.dataset.ticking
+            })
+        }, { passive: true })
+
+        // A rail that starts with nothing to scroll must not show its arrows,
+        // and its width changes with the viewport.
+        new ResizeObserver(sync).observe(rail)
+        sync()
+    })
+}
+
 /** Click a card, and its film opens in the player with sound and controls. */
 function initPlayer() {
     const dialog = document.getElementById('player')
@@ -398,4 +451,5 @@ initReveal()
 initCountUp()
 initCards()
 initAccents()
+initRails()
 initPlayer()

@@ -383,6 +383,95 @@
     }
 
     /* ---------------------------------------------------------------
+       Rails. Each service's samples run in one horizontal queue that
+       snaps card to card, rather than wrapping into a grid.
+       --------------------------------------------------------------- */
+    .rail {
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        /* The rail is flush with the container, but the first and last cards
+           need room to clear the edge fades when snapped. */
+        scroll-padding-inline: 0.25rem;
+    }
+
+    .rail::-webkit-scrollbar { display: none; }
+
+    /* The rail bleeds to the screen edge on small screens, so a card mid-queue
+       is always partly visible and the row reads as continuing. */
+    @media (max-width: 639px) {
+        .rail {
+            margin-inline: -1.25rem;
+            padding-inline: 1.25rem;
+        }
+    }
+
+    .rail-fade {
+        position: absolute;
+        top: 0;
+        bottom: 1rem;
+        width: 4rem;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s ease-out;
+        z-index: 2;
+    }
+
+    .rail-fade-left  { left: 0;  background: linear-gradient(90deg, rgba(4, 8, 8, 0.85), transparent); }
+    .rail-fade-right { right: 0; background: linear-gradient(270deg, rgba(4, 8, 8, 0.85), transparent); }
+
+    /* Only shown when there is actually more rail in that direction. */
+    .rail-wrap.can-prev .rail-fade-left  { opacity: 1; }
+    .rail-wrap.can-next .rail-fade-right { opacity: 1; }
+
+    .rail-nav {
+        position: absolute;
+        top: calc(50% - 1.5rem);
+        z-index: 3;
+        display: grid;
+        place-items: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 50%;
+        color: rgb(255 255 255 / 0.9);
+        background: rgba(8, 14, 14, 0.55);
+        border: 1px solid rgb(255 255 255 / 0.18);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        opacity: 0;
+        transition: opacity 0.35s ease-out, transform 0.35s ease-out, background 0.3s ease-out;
+    }
+
+    .rail-nav-prev { left: -0.5rem;  transform: translateX(6px); }
+    .rail-nav-next { right: -0.5rem; transform: translateX(-6px); }
+
+    /* The arrows only appear on a device with a pointer, and only once the
+       rail is hovered - they are a convenience over scrolling, not furniture. */
+    @media (hover: hover) {
+        .rail-wrap:hover .rail-nav.is-usable { opacity: 1; transform: translateX(0); }
+    }
+
+    .rail-nav:hover { background: rgba(255, 255, 255, 0.16); }
+    .rail-nav:focus-visible { opacity: 1; transform: translateX(0); outline: 2px solid rgb(105 255 247 / 0.8); outline-offset: 2px; }
+    .rail-nav:not(.is-usable) { pointer-events: none; }
+
+    /* Spotlight: hovering one card settles the rest back, so attention lands
+       on the one under the cursor rather than being split across the row. */
+    @media (hover: hover) {
+        .rail:hover .sample-card:not(:hover) {
+            opacity: 0.45;
+            filter: saturate(0.6);
+        }
+    }
+
+    .sample-card {
+        transition:
+            opacity 0.45s ease-out,
+            filter 0.45s ease-out,
+            transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 0.5s ease-out;
+    }
+
+    /* ---------------------------------------------------------------
        Teal accents. The brand's other half, placed as objects rather
        than left to a corner of the field where most of the page never
        sees it. A thin ring over a soft glow, drifting slowly on its
@@ -561,6 +650,9 @@
         .curtain, .curtain-panel, .curtain-seam { transition: none; }
 
         .accent-body { animation: none; }
+
+        .rail { scroll-behavior: auto; }
+        .rail:hover .sample-card:not(:hover) { opacity: 1; filter: none; }
         .accent, .accent-ring, .accent-ring-inner, .accent-glow { transition: none; }
 
         .motif-splash, .motif-art, .sample-splash { transition: none; }
