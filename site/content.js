@@ -129,7 +129,7 @@ export const services = [
         name: 'Swayam',
         tagline: 'MOOC lectures, produced to broadcast standard',
         description: 'End-to-end production for SWAYAM and MOOC courses: studio-recorded lectures, multi-camera sessions and screen capture, edited, captioned and packaged to platform specification.',
-        accent: ['#F2AA84', '#6B0A05'],
+        accent: ['#C1FAFB', '#00615C'],
     },
 ]
 

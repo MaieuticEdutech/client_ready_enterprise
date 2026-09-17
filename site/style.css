@@ -41,19 +41,25 @@
        whole site reads as one surface instead of a stack of bands. */
     body {
         background-color: #5E120E;
-        /* Verified by rendering the stack and measuring it: the earlier base
-           sat at L=32/255, and a red that dark reads as brown however
-           saturated it is. This lands near L=61 with the peach highlights
-           brightened so they lift the field instead of muddying it. */
+        /* Red holds the top and left; teal rises out of the bottom-right. The
+           two families are near-opposite on the wheel, so blending them
+           directly passes through a desaturated olive. A deep ink trough sits
+           between them instead, which drops the crossover to roughly L=20 -
+           dark enough that the eye reads it as shadow between two light
+           sources rather than as mud. Verified by rendering the stack and
+           sampling saturation down the transition. */
         background-image:
             radial-gradient(34rem 26rem at 14% 4%, rgba(214, 42, 30, 0.62), transparent 60%),
             radial-gradient(30rem 24rem at 88% 2%, rgba(190, 28, 20, 0.58), transparent 60%),
             radial-gradient(26rem 20rem at 62% 22%, rgba(255, 150, 132, 0.22), transparent 62%),
             radial-gradient(32rem 26rem at 4% 38%, rgba(200, 34, 24, 0.50), transparent 60%),
-            radial-gradient(28rem 22rem at 96% 46%, rgba(214, 42, 30, 0.52), transparent 60%),
-            radial-gradient(26rem 20rem at 40% 58%, rgba(255, 168, 140, 0.18), transparent 62%),
-            radial-gradient(30rem 24rem at 16% 82%, rgba(200, 34, 24, 0.48), transparent 60%),
-            radial-gradient(28rem 22rem at 84% 90%, rgba(190, 28, 20, 0.52), transparent 60%);
+            radial-gradient(28rem 22rem at 96% 36%, rgba(214, 42, 30, 0.40), transparent 60%),
+            radial-gradient(26rem 20rem at 32% 54%, rgba(255, 168, 140, 0.16), transparent 62%),
+            radial-gradient(30rem 24rem at 8% 78%, rgba(200, 34, 24, 0.46), transparent 60%),
+            radial-gradient(46rem 34rem at 72% 72%, rgba(4, 9, 8, 0.92), transparent 70%),
+            radial-gradient(30rem 24rem at 104% 102%, rgba(0, 134, 128, 0.80), transparent 62%),
+            radial-gradient(24rem 19rem at 88% 94%, rgba(0, 97, 92, 0.70), transparent 62%),
+            radial-gradient(16rem 13rem at 98% 80%, rgba(21, 217, 161, 0.16), transparent 60%);
         background-attachment: scroll;
         background-size: 100% 100%;
         background-repeat: no-repeat;
