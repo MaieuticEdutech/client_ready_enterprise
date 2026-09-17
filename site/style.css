@@ -40,22 +40,20 @@
        is fixed so the field stays put while the page scrolls over it - the
        whole site reads as one surface instead of a stack of bands. */
     body {
-        background-color: #26090A;
-        /* Smaller, more numerous pools rather than a few enormous ones. Orbs
-           wider than the viewport only ever show one fragment of a colour
-           transition, which reads as a zoomed-in smear; at this scale the
-           field has a composition you can actually see. */
+        background-color: #5E120E;
+        /* Verified by rendering the stack and measuring it: the earlier base
+           sat at L=32/255, and a red that dark reads as brown however
+           saturated it is. This lands near L=61 with the peach highlights
+           brightened so they lift the field instead of muddying it. */
         background-image:
-            radial-gradient(34rem 26rem at 14% 4%, rgba(196, 26, 18, 0.55), transparent 60%),
-            radial-gradient(30rem 24rem at 88% 2%, rgba(163, 16, 9, 0.52), transparent 60%),
-            radial-gradient(26rem 20rem at 62% 22%, rgba(248, 132, 126, 0.20), transparent 62%),
-            radial-gradient(32rem 26rem at 4% 38%, rgba(163, 16, 9, 0.40), transparent 60%),
-            radial-gradient(28rem 22rem at 96% 46%, rgba(196, 26, 18, 0.42), transparent 60%),
-            radial-gradient(26rem 20rem at 40% 58%, rgba(242, 170, 132, 0.16), transparent 62%),
-            radial-gradient(30rem 24rem at 16% 82%, rgba(196, 26, 18, 0.38), transparent 60%),
-            radial-gradient(28rem 22rem at 84% 90%, rgba(163, 16, 9, 0.42), transparent 60%);
-        /* Scrolls with the page: a fixed field of this scale would slide under
-           the content and read as the background sticking. */
+            radial-gradient(34rem 26rem at 14% 4%, rgba(214, 42, 30, 0.62), transparent 60%),
+            radial-gradient(30rem 24rem at 88% 2%, rgba(190, 28, 20, 0.58), transparent 60%),
+            radial-gradient(26rem 20rem at 62% 22%, rgba(255, 150, 132, 0.22), transparent 62%),
+            radial-gradient(32rem 26rem at 4% 38%, rgba(200, 34, 24, 0.50), transparent 60%),
+            radial-gradient(28rem 22rem at 96% 46%, rgba(214, 42, 30, 0.52), transparent 60%),
+            radial-gradient(26rem 20rem at 40% 58%, rgba(255, 168, 140, 0.18), transparent 62%),
+            radial-gradient(30rem 24rem at 16% 82%, rgba(200, 34, 24, 0.48), transparent 60%),
+            radial-gradient(28rem 22rem at 84% 90%, rgba(190, 28, 20, 0.52), transparent 60%);
         background-attachment: scroll;
         background-size: 100% 100%;
         background-repeat: no-repeat;
@@ -85,7 +83,7 @@
         inset: 0;
         z-index: 0;
         pointer-events: none;
-        background: radial-gradient(120% 90% at 50% 40%, transparent 42%, rgba(20, 5, 5, 0.45) 100%);
+        background: radial-gradient(120% 90% at 50% 40%, transparent 42%, rgba(38, 8, 6, 0.38) 100%);
     }
 
     /* Everything real sits above the field and its two overlays. */
@@ -316,8 +314,8 @@
        than a white slab that would cut the card out of the page. */
     .card-glass {
         background: rgba(255, 255, 255, 0.055);
-        backdrop-filter: blur(18px) saturate(140%);
-        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -375,6 +373,13 @@
     .about-orbit {
         transform-origin: center;
         animation: about-orbit-turn 60s linear infinite;
+    }
+
+    /* Off-screen sections do no layout, paint or animation work. The motifs
+       animate continuously, so without this all six run all the time. */
+    .work-section {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 900px;
     }
 
     /* ---------------------------------------------------------------

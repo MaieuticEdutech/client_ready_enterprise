@@ -321,7 +321,7 @@ export function section(service, position, videos) {
     return `
         <section
             id="${service.slug}"
-            class="relative isolate scroll-mt-8 overflow-hidden border-b border-white/8 py-20 sm:py-28 ${position % 2 ? 'bg-white/[0.02]' : ''}"
+            class="work-section relative isolate scroll-mt-8 overflow-hidden border-b border-white/8 py-20 sm:py-28 ${position % 2 ? 'bg-white/[0.02]' : ''}"
             aria-labelledby="${service.slug}-title"
         >
             ${motif(service)}
