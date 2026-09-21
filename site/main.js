@@ -299,6 +299,13 @@ function initRails() {
             return card.getBoundingClientRect().width + gap
         }
 
+        // The position indicator: one dot per film, and a "2 / 5" count. The
+        // current film is whichever card the rail's left edge is nearest to,
+        // so it reads the same whether one card or four fit on screen.
+        const dots = [...wrap.querySelectorAll('[data-rail-dot]')]
+        const count = wrap.querySelector('[data-rail-count]')
+        let current = -1
+
         const sync = () => {
             const max = rail.scrollWidth - rail.clientWidth
             // A pixel of slack: sub-pixel layout means scrollLeft rarely lands
@@ -311,10 +318,23 @@ function initRails() {
             wrap.classList.toggle('can-next', scrollable && !atEnd)
             prev.classList.toggle('is-usable', scrollable && !atStart)
             next.classList.toggle('is-usable', scrollable && !atEnd)
+
+            if (!dots.length) return
+            // At the far end, snap the indicator to the last film: the left
+            // edge can never reach it when several cards fit at once.
+            const at = atEnd ? dots.length - 1 : Math.min(dots.length - 1, Math.round(rail.scrollLeft / step()))
+            if (at === current) return
+            current = at
+            dots.forEach((dot, n) => {
+                dot.classList.toggle('is-current', n === at)
+                dot.setAttribute('aria-current', n === at ? 'true' : 'false')
+            })
+            if (count) count.textContent = `${at + 1} / ${dots.length}`
         }
 
         prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }))
         next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }))
+        dots.forEach((dot, n) => dot.addEventListener('click', () => rail.scrollTo({ left: n * step(), behavior: 'smooth' })))
 
         rail.addEventListener('scroll', () => {
             // Coalesce to one update per frame; scroll fires far more often.

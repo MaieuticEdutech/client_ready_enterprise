@@ -469,6 +469,14 @@ export function section(service, position, videos) {
             <button type="button" class="rail-nav rail-nav-next" data-rail-next aria-label="Next">
                 <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </button>
+
+            ${entries.length > 1 ? `
+            <!-- One dot per film and a running count, so a visitor can see the
+                 rail continues past the edge. A dot jumps straight to its film. -->
+            <div class="rail-dots" data-rail-dots role="group" aria-label="Films in this section">
+                ${entries.map((_, n) => `<button type="button" class="rail-dot" data-rail-dot="${n}" aria-label="Film ${n + 1} of ${entries.length}"></button>`).join('')}
+                <span class="rail-count" data-rail-count aria-live="polite">1 / ${entries.length}</span>
+            </div>` : ''}
         </div>`).join('')
 
     return `

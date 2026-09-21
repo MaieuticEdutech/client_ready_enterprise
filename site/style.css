@@ -742,6 +742,50 @@
     .rail-nav:focus-visible { opacity: 1; transform: translateX(0); outline: 2px solid rgb(245 245 242 / 0.8); outline-offset: 2px; }
     .rail-nav:not(.is-usable) { pointer-events: none; }
 
+    /* The position indicator under a rail: a dot per film and a running
+       count, so the rail visibly continues past the edge. Quiet furniture -
+       cream at low opacity on the plate, the current film picked out in the
+       same red that marks the open wall panel. */
+    .rail-dots {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        padding-inline: 0.25rem;
+    }
+
+    .rail-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: rgb(245 245 242 / 0.28);
+        cursor: pointer;
+        transition: background 0.4s ease-out, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .rail-dot:hover { background: rgb(245 245 242 / 0.6); }
+
+    .rail-dot.is-current {
+        background: var(--red);
+        transform: scale(1.35);
+    }
+
+    .rail-dot:focus-visible {
+        outline: 2px solid rgb(245 245 242 / 0.8);
+        outline-offset: 3px;
+    }
+
+    .rail-count {
+        margin-left: 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.18em;
+        color: rgb(245 245 242 / 0.55);
+    }
+
     /* Spotlight: hovering one card settles the rest back, so attention lands
        on the one under the cursor rather than being split across the row. */
     @media (hover: hover) {
@@ -949,6 +993,7 @@
         .panel-reveal { grid-template-rows: 1fr; opacity: 1; transform: none; }
 
         .rail { scroll-behavior: auto; }
+        .rail-dot { transition: none; }
         .rail:hover .sample-card:not(:hover) { opacity: 1; filter: none; }
         .accent, .accent-ring, .accent-ring-inner, .accent-glow { transition: none; }
 
