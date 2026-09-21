@@ -80,13 +80,22 @@ const motifs = {
         <circle class="motif-dot motif-dot-2" cx="118" cy="87" r="4.5" fill="currentColor" stroke="none" />
         <circle class="motif-dot motif-dot-3" cx="130" cy="94" r="4.5" fill="currentColor" stroke="none" />`,
 
-    'animation': () => `
+    // Stacked cels, the way a 2D scene is built up frame over frame.
+    '2d-animation': () => `
         <rect class="motif-frame motif-frame-3" x="34" y="46" width="108" height="108" rx="8" />
         <rect class="motif-frame motif-frame-2" x="48" y="46" width="108" height="108" rx="8" />
         <rect class="motif-frame motif-frame-1" x="62" y="46" width="108" height="108" rx="8" />
         <path class="motif-stroke" d="M74 128c14-46 42-58 70-24" stroke-width="2.5" />`,
 
-    'ai-videos': () => {
+    // An isometric cube: the same object, turned so you can see its depth.
+    '3d-animation': () => `
+        <path class="motif-solid" d="M100 38 172 79v82l-72 41-72-41V79z" />
+        <path class="motif-edge" d="M100 38v41m0 0 72-41m-72 41-72-41m72 41v123" stroke-width="2" opacity="0.75" />
+        <circle class="motif-vertex motif-vertex-1" cx="100" cy="79" r="5.5" fill="currentColor" stroke="none" />
+        <circle class="motif-vertex motif-vertex-2" cx="172" cy="79" r="5.5" fill="currentColor" stroke="none" />
+        <circle class="motif-vertex motif-vertex-3" cx="28" cy="79" r="5.5" fill="currentColor" stroke="none" />`,
+
+    'ai-generated-videos': () => {
         let cells = ''
         for (let r = 0; r < 6; r++) {
             for (let c = 0; c < 6; c++) {
@@ -96,14 +105,16 @@ const motifs = {
         return `<g class="motif-grid">${cells}</g><path class="motif-scan" d="M32 40h136" stroke-width="2.5" />`
     },
 
-    'smart-board': () => `
-        <g class="motif-panels">
-            <rect class="motif-panel motif-panel-1" x="26" y="58" width="64" height="46" rx="5" />
-            <rect class="motif-panel motif-panel-2" x="106" y="58" width="64" height="46" rx="5" />
-            <rect class="motif-panel motif-panel-3" x="26" y="118" width="64" height="46" rx="5" />
-            <rect class="motif-panel motif-panel-4" x="106" y="118" width="64" height="46" rx="5" />
+    // Broadcast arcs over a rising line: the pitch, carried outward.
+    'marketing-videos': () => `
+        <g class="motif-waves" style="transform-origin: 62px 138px">
+            <path class="motif-wave motif-wave-1" d="M86 114a34 34 0 0 1 0 48" stroke-width="3" />
+            <path class="motif-wave motif-wave-2" d="M104 98a58 58 0 0 1 0 80" stroke-width="3" opacity="0.66" />
+            <path class="motif-wave motif-wave-3" d="M122 82a82 82 0 0 1 0 112" stroke-width="3" opacity="0.4" />
         </g>
-        <path class="motif-sketch" d="M36 94c10-20 22-26 34-12M116 94c12-16 24-14 34 4M36 154c12-14 22-16 34-6M116 154c10-18 24-18 34 0" opacity="0.7" />`,
+        <path class="motif-climb" d="M34 150l30-26 26 16 38-42" stroke-width="2.5" />
+        <path class="motif-climb-head" d="M116 98h22v22" stroke-width="2.5" />
+        <circle class="motif-vertex" cx="62" cy="138" r="6" fill="currentColor" stroke="none" />`,
 
     'motion-graphics': () => {
         const bars = [46, 72, 98, 124, 150]

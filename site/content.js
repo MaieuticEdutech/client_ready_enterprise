@@ -35,6 +35,11 @@
  * JPG in site/public/posters/ and reference it as 'posters/name.jpg' - and is
  * shown in place of the generic course-slide frame when set.
  */
+// NOTE: the 23 newest films carry a local poster and an empty `src`, so they
+// read as "Footage coming soon" rather than as a broken player. The files are
+// staged but not yet in R2. Once each one is uploaded to films/, set its `src`
+// to https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/<name>.mp4 —
+// the poster filename already matches the film's name.
 export const videos = [
     // Articulate — courses, opened by link. Paste each course's share URL into `link`.
     { service: 'articulate', title: 'Data Cleaning Tasks', link: 'https://360.articulate.com/review/content/5b643c1a-df38-45fa-a90c-b0be85857cea/review', poster: 'posters/articulate-data-cleaning-tasks.jpg' },
@@ -49,21 +54,47 @@ export const videos = [
     { service: 'infographics', title: 'Alliance University', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/articulate-introduction-to-semiotic-analysis.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/articulate-introduction-to-semiotic-analysis.jpg' },
     { service: 'infographics', title: 'Dayananda Sagar University', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/articulate-dsu-unit-81.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/articulate-dsu-unit-81.jpg' },
     { service: 'infographics', title: 'REVA University', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/articulate-problem-solving-using-c-unit-121.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/articulate-problem-solving-using-c-unit-121.jpg' },
+    { service: 'infographics', title: 'Home and Enterprise E2E Diagram', client: '', duration: '2:00', src: '', poster: 'posters/infographics-home-and-enterprise-e2e-diagram.jpg' },
+    { service: 'infographics', title: 'OT Security', client: '', duration: '6:26', src: '', poster: 'posters/infographics-ot-security.jpg' },
+    { service: 'infographics', title: 'Introducing New Powerful Launches', client: '', duration: '2:03', src: '', poster: 'posters/infographics-introducing-new-powerful-launches.jpg' },
+    { service: 'infographics', title: 'All in One PoS Service', client: '', duration: '1:26', src: '', poster: 'posters/infographics-all-in-one-pos-service.jpg' },
+    { service: 'infographics', title: 'Reconciliation as a Service', client: '', duration: '13:59', src: '', poster: 'posters/infographics-reconciliation-as-a-service.jpg' },
 
-    // Animation
-    { service: 'animation', category: '2D Animation', title: 'Code of Conduct', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-code-of-conduct.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-code-of-conduct.jpg' },
-    { service: 'animation', category: '2D Animation', title: 'IEEE', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-ieee.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-ieee.jpg' },
-    { service: 'animation', category: '2D Animation', title: 'NBM 2024 Presentation Deck', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-nbm-2024-presentation-deck.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-nbm-2024-presentation-deck.jpg' },
-    { service: 'animation', category: '2D Animation', title: 'QR Charging', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-qr-charging.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-qr-charging.jpg' },
-    { service: 'animation', category: '3D Animation', title: 'Blood Vessel', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-blood-vessel.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-blood-vessel.jpg' },
-    { service: 'animation', category: '3D Animation', title: 'RedFx', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-redfx.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-redfx.jpg' },
+    // 2D Animation
+    { service: '2d-animation', title: 'Code of Conduct', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-code-of-conduct.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-code-of-conduct.jpg' },
+    { service: '2d-animation', title: 'IEEE', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-ieee.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-ieee.jpg' },
+    { service: '2d-animation', title: 'NBM 2024 Presentation Deck', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-nbm-2024-presentation-deck.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-nbm-2024-presentation-deck.jpg' },
+    { service: '2d-animation', title: 'QR Charging', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-qr-charging.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-qr-charging.jpg' },
+    { service: '2d-animation', title: 'Collection with a Smile', client: '', duration: '2:20', src: '', poster: 'posters/2d-animation-collection-with-a-smile.jpg' },
+    { service: '2d-animation', title: 'The Cost of Confusion', client: '', duration: '2:54', src: '', poster: 'posters/2d-animation-the-cost-of-confusion.jpg' },
+    { service: '2d-animation', title: 'Back-to-Back Calls', client: '', duration: '4:24', src: '', poster: 'posters/2d-animation-back-to-back-calls.jpg' },
+    { service: '2d-animation', title: 'Jade Global — Slides 68 to 70', client: '', duration: '1:05', src: '', poster: 'posters/2d-animation-jade-slides-68-70.jpg' },
+    { service: '2d-animation', title: 'Jade Global — Part 4, Scenes 16 to 19', client: '', duration: '1:20', src: '', poster: 'posters/2d-animation-jade-p4-s16-19.jpg' },
 
-    // AI Videos
-    { service: 'ai-videos', title: 'AI Based Learning Sample', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/ai-videos-ai-based-learning-sample.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/ai-videos-ai-based-learning-sample.jpg' },
-    { service: 'ai-videos', title: 'Emversity EWS', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/ai-videos-emversity-ews.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/ai-videos-emversity-ews.jpg' },
+    // 3D Animation
+    { service: '3d-animation', title: 'Blood Vessel', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-blood-vessel.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-blood-vessel.jpg' },
+    { service: '3d-animation', title: 'RedFx', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/animation-redfx.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-redfx.jpg' },
+    { service: '3d-animation', title: 'Vehicle Safety', client: '', duration: '1:43', src: '', poster: 'posters/3d-animation-vehicle-safety.jpg' },
 
-    // Smart Board
-    { service: 'smart-board', title: 'Pricing Fundamentals, Methods & Strategies', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/smart-board-pricing-fundamentals-methods-strategies.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/smart-board-pricing-fundamentals-methods-strategies.jpg' },
+    // Ai Generated Videos
+    { service: 'ai-generated-videos', title: 'AI Based Learning Sample', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/ai-videos-ai-based-learning-sample.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/ai-videos-ai-based-learning-sample.jpg' },
+    { service: 'ai-generated-videos', title: 'Emversity EWS', client: '', duration: '', src: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/ai-videos-emversity-ews.mp4', poster: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/ai-videos-emversity-ews.jpg' },
+    { service: 'ai-generated-videos', title: 'Scene 4', client: '', duration: '0:20', src: '', poster: 'posters/ai-generated-videos-scene-4.jpg' },
+    { service: 'ai-generated-videos', title: 'Scene 22', client: '', duration: '0:17', src: '', poster: 'posters/ai-generated-videos-scene-22.jpg' },
+    { service: 'ai-generated-videos', title: 'Scene 37', client: '', duration: '0:09', src: '', poster: 'posters/ai-generated-videos-scene-37.jpg' },
+
+    // Marketing Videos — shot vertical (1080x1920), unlike everything else here.
+    { service: 'marketing-videos', title: 'AI', client: '', duration: '0:34', src: '', poster: 'posters/marketing-videos-ai.jpg' },
+    { service: 'marketing-videos', title: 'AIoT for Climate Change', client: '', duration: '0:49', src: '', poster: 'posters/marketing-videos-aiot-for-climate-change.jpg' },
+    { service: 'marketing-videos', title: 'Digital Forensics I', client: '', duration: '0:29', src: '', poster: 'posters/marketing-videos-digital-forensics-i.jpg' },
+    { service: 'marketing-videos', title: 'Digital Forensics II', client: '', duration: '0:46', src: '', poster: 'posters/marketing-videos-digital-forensics-ii.jpg' },
+
+    // Motion Graphics
+    { service: 'motion-graphics', title: 'Azim Premji Scholarship', client: '', duration: '3:06', src: '', poster: 'posters/motion-graphics-azim-premji-scholarship.jpg' },
+    { service: 'motion-graphics', title: 'Introduction to ASIC Design Flow', client: '', duration: '1:38', src: '', poster: 'posters/motion-graphics-introduction-to-asic-design-flow.jpg' },
+    { service: 'motion-graphics', title: 'Novo Nordisk', client: '', duration: '4:33', src: '', poster: 'posters/motion-graphics-novo-nordisk.jpg' },
+    { service: 'motion-graphics', title: 'Tech Academy', client: '', duration: '10:45', src: '', poster: 'posters/motion-graphics-tech-academy.jpg' },
+    { service: 'motion-graphics', title: 'Zydus', client: '', duration: '2:00', src: '', poster: 'posters/motion-graphics-zydus.jpg' },
 ]
 
 /**
@@ -115,7 +146,7 @@ export const panels = [
         title: 'Production',
         description: 'Studio and screen capture, edited, graded and captioned to platform specification.',
         image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/smart-board-pricing-fundamentals-methods-strategies.jpg',
-        href: '#smart-board',
+        href: '#marketing-videos',
     },
     {
         id: 'animation',
@@ -125,7 +156,7 @@ export const panels = [
         title: 'Animation',
         description: 'Drawn by hand and modelled in depth, for the ideas that only land once you can see them move.',
         image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/animation-blood-vessel.jpg',
-        href: '#animation',
+        href: '#3d-animation',
     },
     {
         id: 'technology',
@@ -135,12 +166,12 @@ export const panels = [
         title: 'Technology',
         description: 'SCORM packaging, LMS deployment and the plumbing that gets the work in front of learners.',
         image: 'https://pub-fbba415a5af44e0dbcd4c54f49b8d921.r2.dev/films/posters/ai-videos-emversity-ews.jpg',
-        href: '#ai-videos',
+        href: '#ai-generated-videos',
     },
 ]
 
 /**
- * The six lines of work. Order here is the order on the page. A service with
+ * The seven lines of work. Order here is the order on the page. A service with
  * `kind: 'links'` shows courses opened by link rather than films. Each carries
  * its own two colour stops, used for the section accent and the card washes.
  */
@@ -154,6 +185,27 @@ export const services = [
         accent: ['#1C1C1C', '#050505'],
     },
     {
+        slug: '2d-animation',
+        name: '2D Animation',
+        tagline: 'Drawn by hand, frame by frame',
+        description: 'Character and vector animation for explainers, campaign films and course openers, drawn and rigged in two dimensions.',
+        accent: ['#C70102', '#050505'],
+    },
+    {
+        slug: '3d-animation',
+        name: '3D Animation',
+        tagline: 'Modelled in depth, lit with intent',
+        description: 'Product and process animation in three dimensions, for the ideas that only make sense when you can turn them around and look inside.',
+        accent: ['#242424', '#050505'],
+    },
+    {
+        slug: 'ai-generated-videos',
+        name: 'AI Generated Videos',
+        tagline: 'Synthetic presenters, produced properly',
+        description: 'AI-assisted presenters and voice for content that needs to ship at volume, scripted and directed with the same care as a live shoot.',
+        accent: ['#1C1C1C', '#050505'],
+    },
+    {
         slug: 'infographics',
         name: 'Infographics',
         tagline: 'Complex ideas, made legible at a glance',
@@ -161,24 +213,17 @@ export const services = [
         accent: ['#242424', '#050505'],
     },
     {
-        slug: 'animation',
-        name: 'Animation',
-        tagline: 'Drawn by hand, modelled in depth',
-        description: 'Character and vector animation for explainers, campaign films and course openers, alongside product and process animation in three dimensions for the ideas that only make sense when you can turn them around and look inside.',
+        slug: 'marketing-videos',
+        name: 'Marketing Videos',
+        tagline: 'Films that carry the pitch',
+        description: 'Brand films, product launches and campaign cuts, scripted and edited to hold attention in the feed, in the room and on the stage.',
         accent: ['#C70102', '#050505'],
     },
     {
-        slug: 'ai-videos',
-        name: 'AI Videos',
-        tagline: 'Synthetic presenters, produced properly',
-        description: 'AI-assisted presenters and voice for content that needs to ship at volume, scripted and directed with the same care as a live shoot.',
-        accent: ['#242424', '#050505'],
-    },
-    {
-        slug: 'smart-board',
-        name: 'Smart Board',
-        tagline: 'The film, before the film',
-        description: 'Boards and animatics that settle pacing, framing and intent before a single frame is produced, so production time is spent building rather than deciding.',
+        slug: 'motion-graphics',
+        name: 'Motion Graphics',
+        tagline: 'Type and shape, set in motion',
+        description: 'Kinetic typography, animated identities and graphic systems that move, built for titles, transitions and social cutdowns.',
         accent: ['#1C1C1C', '#050505'],
     },
 ]
