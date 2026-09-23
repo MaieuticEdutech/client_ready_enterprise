@@ -51,7 +51,7 @@ function footer() {
         </nav>`
 
     return `
-        <footer class="border-t border-white/10 bg-black/25 text-white backdrop-blur-xl" aria-labelledby="footer-heading">
+        <footer class="border-t border-white/10 bg-black text-white" aria-labelledby="footer-heading">
             <h2 id="footer-heading" class="sr-only">About ${escapeHtml(company.name)}</h2>
 
             <div class="mx-auto max-w-7xl px-5 pb-12 pt-16 sm:px-8 sm:pt-20">
